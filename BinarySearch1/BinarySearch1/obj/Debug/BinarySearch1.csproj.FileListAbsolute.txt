@@ -1,0 +1,5 @@
+C:\Users\Вероника\Source\Repos\prog2018\BinarySearch1\BinarySearch1\bin\Debug\BinarySearch1.exe.config
+C:\Users\Вероника\Source\Repos\prog2018\BinarySearch1\BinarySearch1\bin\Debug\BinarySearch1.exe
+C:\Users\Вероника\Source\Repos\prog2018\BinarySearch1\BinarySearch1\bin\Debug\BinarySearch1.pdb
+C:\Users\Вероника\Source\Repos\prog2018\BinarySearch1\BinarySearch1\obj\Debug\BinarySearch1.exe
+C:\Users\Вероника\Source\Repos\prog2018\BinarySearch1\BinarySearch1\obj\Debug\BinarySearch1.pdb
