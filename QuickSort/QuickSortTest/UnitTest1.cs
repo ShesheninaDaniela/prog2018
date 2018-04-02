@@ -1,76 +1,64 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QuickSortTest;
+using QuickSort;
 
-namespace QuickSortTest
+namespace QuikSort.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class QuickSortTest
     {
         [TestMethod]
-        public void arrayOfThreeElements()
+        public void Test3Elements()
         {
-            int[] three = new int[3] { -1, -2, -3 };
-            Program.QuickSort(three, 0, 2);
-
-            int[] expectedArray = new int[] { -3, -2, -1 };
-
-            for (int i = 0; i < expectedArray.Length; i++)
-                Assert.AreEqual(expectedArray[i], three[i]);
+            
+            int[] threeElementsArray = new[] { 10, 5, 7 };
+            Program.QuickSort(threeElementsArray);
+            Assert.IsTrue(threeElementsArray[0] <= threeElementsArray[1], "Второй элемент должен быть больше первого");
+            Assert.IsTrue(threeElementsArray[1] <= threeElementsArray[2], "Третий элемент должен быть больше второго");
         }
+
         [TestMethod]
-        public void arrayOf100Elements()
+        public void Test100EqualElements()
         {
-            int[] elements = new int[100];
-            for (int i = 0; i < 99; i++)
-                elements[i] = 0;
-
-            int[] expectedArray = new int[100];
-            for (int i = 0; i < 99; i++)
-                expectedArray[i] = 0;
-
-            Program.QuickSort(elements, 0, 99);
-
-            for (int i = 0; i < expectedArray.Length; i++)
-                Assert.AreEqual(expectedArray[i], elements[i]);
+            
+            int[] equalNumbers = new int[100];
+            for (int i = 0; i < equalNumbers.Length; i++)
+                equalNumbers[i] = 14;
+            Program.QuickSort(equalNumbers);
         }
-        public void arrayOf1000Elements()
+
+        [TestMethod]
+        public void Test1000RandomElements()
         {
+                  
+            int[] randomNumbers = new int[1000];
             var rnd = new Random();
-            int[] randomElements = new int[1000];
-            for (int i = 0; i < 1000; i++)
-                randomElements[i] = rnd.Next();
-
-            Program.QuickSort(randomElements, 0, 999);
-
+            for (int i = 0; i < randomNumbers.Length; i++)
+                randomNumbers[i] = rnd.Next();
+            Program.QuickSort(randomNumbers);
             for (int i = 0; i < 10; i++)
             {
-                int checkElement = rnd.Next(0, 998);
-                Assert.IsTrue(randomElements[checkElement] < randomElements[checkElement + 1]);
+                int index = rnd.Next(0, 999);
+                Assert.IsTrue(randomNumbers[index] <= randomNumbers[index + 1], "В паре большим должен быть тот элемент, чей индекс больше");
             }
         }
-        [TestMethod]
-        public void emptyArray()
-        {
-            int[] emptyArray = new int[] { };
 
-            Program.QuickSort(emptyArray, 0, 0);
-        }
         [TestMethod]
-        public void arrayOf1500000000Elements()
+        public void TestEmptyArray()
         {
+            
+            int[] emptyArray = new int[0];
+            Program.QuickSort(emptyArray);
+        }
+
+        [TestMethod]
+        public void TestBigArray()
+        {          
+            int[] bigArray = new int[1500000000];
             var rnd = new Random();
-            int[] randomElements = new int[200000000];
-            for (int i = 0; i < randomElements.Length; i++)
-                randomElements[i] = rnd.Next();
-
-            Program.QuickSort(randomElements, 0, randomElements.Length - 1);
-
-            for (int i = 0; i < 10; i++)
-            {
-                int checkElement = rnd.Next(0, randomElements.Length - 2);
-                Assert.IsTrue(randomElements[checkElement] < randomElements[checkElement + 1]);
-            }
+            for (int i = 0; i < bigArray.Length; i++)
+                bigArray[i] = rnd.Next();
+            Program.QuickSort(bigArray);
         }
     }
 }
