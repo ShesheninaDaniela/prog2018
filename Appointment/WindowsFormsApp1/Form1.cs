@@ -17,6 +17,8 @@ namespace Appointment
         public Form1()
         {
             InitializeComponent();
+           
+          ComboBox();
         }
         //получить модель заказа на основании введенных данных
         AppointmentToTheDentist GetModelFromUI()
@@ -24,24 +26,32 @@ namespace Appointment
             return new AppointmentToTheDentist()
             {
                 FilledTime = dateTimePicker2.Value,
-                
+
                 Person = new PersonalData
                 {
-                    LastName= textBox1.Text,
+                    LastName = textBox1.Text,
                     FirstName = textBox3.Text,
                     Patronymic = textBox2.Text,
                     DateBirth = dateTimePicker3.Value,
-                    Document= textBox6.Text,
-                    Series= maskedTextBox1.Text,
-                    Number= maskedTextBox2.Text,
+                    Document = textBox6.Text,
+                    Series = maskedTextBox1.Text,
+                    Number = maskedTextBox2.Text,
+                   
                 },
-                                          
+
                 Admission = new AdmissionDate
                 {
                     Admission = dateTimePicker1.Value,
                 },
-                Service = checkedListBox1.Items.OfType<ChoiceOfService>().ToList(),
+                
             };
+        }
+        private void ComboBox()
+        {
+            comboBox1.Items.Add(Service.Чистка);
+            comboBox1.Items.Add(Service.Консультация);
+            comboBox1.Items.Add(Service.Лечение);
+
         }
         //загрузить данные по заказу на форму
         private void SetModelToUI(AppointmentToTheDentist ord)
@@ -55,30 +65,41 @@ namespace Appointment
             maskedTextBox1.Text = ord.Person.Series;
             maskedTextBox2.Text = ord.Person.Number;
             dateTimePicker1.Value = ord.Admission.Admission;
-            checkedListBox1.Items.OfType<ChoiceOfService>().ToList();
-            foreach (var e in ord.Service)
-            {
-                checkedListBox1.Items.Add(e);
-            }
+            //comboBox1.SelectedItem = ord.Service;
+           
         }
-        //сохранить в файл
-        private void button2_Click(object sender, EventArgs e)
+        private void Saver(AppointmentToTheDentist ord)
         {
-            try
-            {
+            if (comboBox1.SelectedIndex == 0)
+                ord.Service = Service.Чистка;
+            if (comboBox1.SelectedIndex == 1)
+                ord.Service = Service.Консультация;
+            if (comboBox1.SelectedIndex == 2)
+                ord.Service = Service.Лечение;
+        }
+        private void Setter(AppointmentToTheDentist ord)
+        {
+            if (ord.Service == Service.Чистка)
+                comboBox1.SelectedIndex = 0;
+            if (ord.Service == Service.Консультация)
+                comboBox1.SelectedIndex = 1;
+            if (ord.Service == Service.Лечение)
+                comboBox1.SelectedIndex = 2;
+        }
+            //сохранить в файл
+            private void button2_Click(object sender, EventArgs e)
+        {
+           
                 var sfd= new SaveFileDialog() { Filter = "Файлы заявок|*.txt" };
                 var result = sfd.ShowDialog(this);
                 if (result == DialogResult.OK)
                 {
                     var dto = GetModelFromUI();
+                Saver(dto);
                     OrderHelper.WriteToFile(sfd.FileName, dto);
-                }
+                
             }
-            catch
-            {
-                MessageBox.Show("Проверьте корректность заполнения данных", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-            }
+           
         }
         //загрузить из файла
         private void button1_Click(object sender, EventArgs e)
@@ -89,6 +110,7 @@ namespace Appointment
             {
                 var dto = OrderHelper.LoadFromFile(ofd.FileName);
                 SetModelToUI(dto);
+                Setter(dto);
             }
         }
     }

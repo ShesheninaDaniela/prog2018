@@ -33,7 +33,7 @@ namespace ЗаписьНаПрием
         /// <summary>
         ///Выбор услуги 
         /// </summary>
-        public List<ChoiceOfService> Service { get; set; }    
+        public Service Service { get; set; }    
     }
     public class AdmissionDate
     {
@@ -78,10 +78,10 @@ namespace ЗаписьНаПрием
         public string  Number { get; set; }
     }
     
-    public enum ChoiceOfService
+    public enum Service
     {
-        TeethCleaning,
-        Consultation,
-        DentalTreatment,
+        Чистка,
+        Консультация,
+        Лечение,
     }
  }
